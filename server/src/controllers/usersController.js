@@ -31,7 +31,7 @@ userController.login = async (req, res) => {
       delete userInfo.password;
       const token = createToken(userInfo);
       res.cookie("token", token);
-      res.status(200).json({ message: "Welcome" });
+      res.status(200).json({ message: "Welcome", userInfo });
     } else {
       res.status(400).json({ message: "Incorrect password" });
     }
@@ -81,6 +81,17 @@ userController.updateUser = async (req, res) => {
     res.status(200).json({ message: "User updated succesfully" });
   } catch (error) {
     res.status(400).json({ message: "We can't update the user" });
+  }
+};
+
+userController.deleteUser = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const userToDelete = await user.findOneAndDelete({ _id: id });
+    res.status(200).json({ message: "User deleted succesfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Error deleting user" });
   }
 };
 
