@@ -10,7 +10,15 @@ import { useUserContext } from "../context/UserContext";
 export const LoginPage = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, reset } = useForm();
-  const { user, setUser } = useUserContext();
+  const { user, setUser, setButtons } = useUserContext();
+  const sideButtonsAdmin = [
+    { name: "Home", link: "/admin" },
+    { name: "Users", link: "/users" },
+    { name: "Create Element", link: "/createElement" },
+    { name: "Create provider", link: "/#" },
+    { name: "Stock", link: "/#" },
+    { name: "Sales", link: "/#" },
+  ];
 
   const login = (data) => {
     const promise = axios.post("http://localhost:3000/login", data, {
@@ -20,6 +28,7 @@ export const LoginPage = () => {
     toast.promise(promise, {
       success: (response) => {
         setUser(response.data.userInfo);
+        setButtons(sideButtonsAdmin);
         return response.data.message;
       },
       loading: "loading",

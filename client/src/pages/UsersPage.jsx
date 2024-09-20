@@ -2,22 +2,17 @@ import { useUserContext } from "../context/UserContext";
 import { CustomNavbar } from "../components/CustomNavbar";
 import { CustomSideBar } from "../components/CustomSideBar";
 import { CustomFooter } from "../components/CustomFooter";
+import { CustomMain } from "../components/CustomMain";
+import { UsersMain } from "../components/UsersMain";
 
-export const AdminPage = () => {
+export const UsersPage = () => {
   const { buttons } = useUserContext();
-
   return (
     <div className="flex flex-col min-h-screen" oncharge>
       <CustomNavbar />
       <div className="flex flex-1">
         <CustomSideBar buttons={buttons} />
-        <main className="flex-1 bg-gray-100 p-6">
-          <h2 className="text-2xl font-bold mb-4">Main Content</h2>
-          <p>
-            This is the main content area. It will take up the rest of the
-            space.
-          </p>
-        </main>
+        <CustomMain content={<UsersMain />} />
       </div>
       <CustomFooter />
     </div>

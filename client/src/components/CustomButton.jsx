@@ -6,12 +6,18 @@ const colorClasses = {
   red: "bg-red-600 hover:bg-red-700",
 };
 
-export const CustomButton = ({ color = "green", text }) => {
+export const CustomButton = ({
+  type = "submit",
+  color = "green",
+  text,
+  onFunction,
+}) => {
   return (
     <div>
       <button
-        type="submit"
+        type={type}
         className={`rounded-md my-2 text-white font-extrabold p-3 ${colorClasses[color]}`}
+        onClick={onFunction}
       >
         {text}
       </button>
