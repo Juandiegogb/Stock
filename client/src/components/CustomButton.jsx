@@ -16,7 +16,7 @@ export const CustomButton = ({
     <div>
       <button
         type={type}
-        className={`rounded-md my-2 text-white font-extrabold p-3 ${colorClasses[color]}`}
+        className={`rounded-md my-2  text-white font-extrabold p-3 ${colorClasses[color]}`}
         onClick={onFunction}
       >
         {text}

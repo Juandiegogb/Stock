@@ -7,3 +7,11 @@ export const createUser = (body) => {
 export const getUsers = () => {
   return api.get("/getUsers");
 };
+
+export const deleteUser = (id) => {
+  return api.delete(`/deleteUser/${id}`);
+};
+
+export const updateUser = (id, body) => {
+  return api.put(`/updateUser/${id}`, body);
+};

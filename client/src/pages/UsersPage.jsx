@@ -8,12 +8,12 @@ import { UsersMain } from "../components/UsersMain";
 export const UsersPage = () => {
   const { buttons } = useUserContext();
   return (
-    <div className="flex flex-col min-h-screen" oncharge>
+    <div className="flex flex-col h-screen">
       <CustomNavbar />
-      <div className="flex flex-1">
+      <main className="flex-1 overflow-auto flex">
         <CustomSideBar buttons={buttons} />
         <CustomMain content={<UsersMain />} />
-      </div>
+      </main>
       <CustomFooter />
     </div>
   );

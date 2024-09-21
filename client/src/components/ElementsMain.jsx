@@ -9,10 +9,8 @@ import { toast } from "sonner";
 import { InputField } from "./InputField.jsx";
 import { useForm } from "react-hook-form";
 import { FaTrash, FaUpload, FaEraser } from "react-icons/fa";
-import { CustomButton } from "./CustomButton.jsx";
-
-export const UsersMain = () => {
-  const [users, setUsers] = useState(null);
+export const ElementsMain = () => {
+  const [elements, setelements] = useState(null);
   const { register, handleSubmit, reset, setValue, getValues } = useForm();
   const [userIdForm, setuserIdForm] = useState(null);
 
@@ -91,7 +89,9 @@ export const UsersMain = () => {
     <div className="w-full h-full flex">
       <div className=" h-full w-1/2 flex-col flex">
         <div className=" h-28 flex items-center  justify-center w-full">
-          <h1 className=" text-3xl font-extrabold  text-center">Users list</h1>
+          <h1 className=" text-3xl font-extrabold  text-center">
+            Elements list
+          </h1>
         </div>
         <div className="overflow-auto flex-1 px-5">
           {users ? (

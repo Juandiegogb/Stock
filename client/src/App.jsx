@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./pages/LoginPage";
 import { UserPage } from "./pages/UserPage";
@@ -7,11 +7,12 @@ import { Toaster, toast } from "sonner";
 import { UserProvider } from "./context/UserContext";
 import { UsersPage } from "./pages/UsersPage";
 import { CreateElementPage } from "./pages/CreateElementPage";
+import { useForm } from "react-hook-form";
 
 function App() {
   return (
-    <UserProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
         <Toaster position="top-right" richColors closeButton duration={700} />
         <Routes>
           <Route path="/" element={<LoginPage />} />
@@ -21,8 +22,8 @@ function App() {
           <Route path="/createElement" element={<CreateElementPage />} />
           <Route path="/admin" element={<AdminPage />} />
         </Routes>
-      </BrowserRouter>
-    </UserProvider>
+      </UserProvider>
+    </BrowserRouter>
   );
 }
 

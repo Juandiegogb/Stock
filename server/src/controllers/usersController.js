@@ -10,9 +10,15 @@ userController.createUser = async (req, res) => {
   const hashedPassword = bcrypt.hashSync(password, 10);
 
   try {
-    await user.create({ username, name, password: hashedPassword, role });
+    await user.create({
+      username,
+      name: name.toUpperCase(),
+      password: hashedPassword,
+      role,
+    });
     res.status(200).json({ message: "User created!" });
   } catch (error) {
+    console.log(error);
     if (error.errorResponse.code === 11000) {
       res.status(400).json({ message: "Username alredy exist" });
     }
@@ -63,10 +69,11 @@ userController.getUser = async (req, res) => {
 };
 
 userController.updateUser = async (req, res) => {
+  console.log(req.body);
   const id = req.params.id;
   const allowedData = ["username", "name", "password", "role", "active"];
   for (let key in req.body) {
-    if (!allowedData.includes(key)) {
+    if (!allowedData.includes(key) || req.body[key].trim() == "") {
       delete req.body[key];
     }
   }
@@ -75,7 +82,12 @@ userController.updateUser = async (req, res) => {
     req.body.password = bcrypt.hashSync(req.body.password, 10);
   }
 
+  if ("name" in req.body) {
+    req.body.name = String(req.body.name).toUpperCase();
+  }
+
   try {
+    console.log(req.body);
     const data = req.body;
     const userInfo = await user.findOneAndUpdate({ _id: id }, data);
     res.status(200).json({ message: "User updated succesfully" });
@@ -87,7 +99,7 @@ userController.updateUser = async (req, res) => {
 userController.deleteUser = async (req, res) => {
   const id = req.params.id;
   try {
-    const userToDelete = await user.findOneAndDelete({ _id: id });
+    await user.findOneAndDelete({ _id: id });
     res.status(200).json({ message: "User deleted succesfully" });
   } catch (error) {
     console.log(error);

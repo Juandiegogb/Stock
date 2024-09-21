@@ -2,11 +2,14 @@ import { useUserContext } from "../context/UserContext";
 import { CustomNavbar } from "../components/CustomNavbar";
 import { CustomSideBar } from "../components/CustomSideBar";
 import { CustomFooter } from "../components/CustomFooter";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const AdminPage = () => {
-  const { buttons } = useUserContext();
+  const { buttons, user } = useUserContext();
+  const navigate = useNavigate();
 
-  return (
+  return user && buttons ? (
     <div className="flex flex-col min-h-screen" oncharge>
       <CustomNavbar />
       <div className="flex flex-1">
@@ -21,5 +24,7 @@ export const AdminPage = () => {
       </div>
       <CustomFooter />
     </div>
+  ) : (
+    <></>
   );
 };

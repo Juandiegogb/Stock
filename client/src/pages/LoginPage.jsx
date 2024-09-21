@@ -20,6 +20,11 @@ export const LoginPage = () => {
     { name: "Sales", link: "/#" },
   ];
 
+  useEffect(() => {
+    setUser(null);
+    setButtons(null);
+  }, []);
+
   const login = (data) => {
     const promise = axios.post("http://localhost:3000/login", data, {
       headers: { withCredentials: true },
@@ -27,7 +32,9 @@ export const LoginPage = () => {
 
     toast.promise(promise, {
       success: (response) => {
-        setUser(response.data.userInfo);
+        const userInfo = response.data.userInfo;
+        setUser(userInfo);
+        userInfo.role === "admin" ? navigate("/admin") : navigate("/user");
         setButtons(sideButtonsAdmin);
         return response.data.message;
       },
@@ -37,16 +44,6 @@ export const LoginPage = () => {
       },
     });
   };
-
-  useEffect(() => {
-    if (user !== null) {
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/user");
-      }
-    }
-  }, [user]);
 
   return (
     <div className="flex justify-center items-center h-screen w-screen">

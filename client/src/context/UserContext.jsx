@@ -1,8 +1,12 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const [user, setUser] = useState(() => {
     const savedInfo = localStorage.getItem("user");
     return savedInfo ? JSON.parse(savedInfo) : null;
@@ -21,6 +25,12 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     localStorage.setItem("buttons", JSON.stringify(buttons));
   }, [buttons]);
+
+  useEffect(() => {
+    if (location.pathname !== "/" && (!user || !buttons)) {
+      navigate("/");
+    }
+  }, []);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
