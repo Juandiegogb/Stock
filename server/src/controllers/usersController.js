@@ -1,20 +1,19 @@
 import bcrypt from "bcryptjs";
 import user from "../models/userModel.js";
 import { createToken } from "../tools/token.js";
-import mongoose from "mongoose";
-
+import companyDB from "../models/companyModel.js";
 const userController = {};
 
 userController.createUser = async (req, res) => {
-  const { username, name, password, role } = req.body;
+  const { username, name, password, role, company } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
-
   try {
     await user.create({
       username,
       name: name.toUpperCase(),
       password: hashedPassword,
       role,
+      company,
     });
     res.status(200).json({ message: "User created!" });
   } catch (error) {
@@ -27,8 +26,8 @@ userController.createUser = async (req, res) => {
 
 userController.login = async (req, res) => {
   const { username, password } = req.body;
+  console.log(req.body);
   const userInfo = await user.findOne({ username }).lean();
-
   if (!userInfo || userInfo.active === false) {
     res.status(400).json({ message: "The user doesn't exist or is inactive" });
   } else {
@@ -50,8 +49,9 @@ userController.logout = (req, res) => {
 };
 
 userController.getUsers = async (req, res) => {
+  const companyId = req.params.companyId;
   try {
-    const response = await user.find();
+    const response = await user.find({ company: companyId });
     res.status(200).json({ response });
   } catch (error) {
     res.status(400).json({ message: "DB error", error });
@@ -104,6 +104,32 @@ userController.deleteUser = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: "Error deleting user" });
+  }
+};
+
+userController.createAdmin = async (req, res) => {
+  const { name, username, company, password } = req.body;
+  const hashedPassword = bcrypt.hashSync(password, 10);
+  let newCompany = "";
+  try {
+    newCompany = await companyDB.create({ name: company });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error });
+  }
+
+  try {
+    await user.create({
+      username,
+      name,
+      company: newCompany._id,
+      password: hashedPassword,
+      role: "admin",
+    });
+    return res.status(200).json({ message: "Admin user created succesfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error });
   }
 };
 

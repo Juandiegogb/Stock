@@ -5,15 +5,17 @@ import router from "./src/routes/routes.js";
 import { DBconnect } from "./db.js";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
+import companyDB from "./src/models/companyModel.js";
 
 if (process.env.enviromment !== "production") {
   dotenv.config({ path: "./src/.env" });
 }
 
 const origin = process.env.allowedOrigin;
+console.log(origin);
 
 const app = express();
-app.use(cors({ credentials: true, origin: origin }));
+app.use(cors({ credentials: true, origin: "*" }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
@@ -25,3 +27,4 @@ app.listen(port, () => {
   console.log(`http://localhost:${port}`);
   DBconnect();
 });
+

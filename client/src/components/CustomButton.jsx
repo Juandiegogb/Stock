@@ -11,6 +11,7 @@ export const CustomButton = ({
   color = "green",
   text,
   onFunction,
+  ref = null,
 }) => {
   return (
     <div>

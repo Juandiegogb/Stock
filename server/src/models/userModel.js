@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+  company: {
+    type: "ObjectId",
+    ref: "company",
+  },
 });
 const user = mongoose.model("user", userSchema);
 export default user;

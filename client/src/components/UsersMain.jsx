@@ -9,12 +9,13 @@ import { toast } from "sonner";
 import { InputField } from "./InputField.jsx";
 import { useForm } from "react-hook-form";
 import { FaTrash, FaUpload, FaEraser } from "react-icons/fa";
-import { CustomButton } from "./CustomButton.jsx";
+import { useUserContext } from "../context/UserContext.jsx";
 
 export const UsersMain = () => {
   const [users, setUsers] = useState(null);
   const { register, handleSubmit, reset, setValue, getValues } = useForm();
   const [userIdForm, setuserIdForm] = useState(null);
+  const { user } = useUserContext();
 
   useEffect(() => {
     refreshUsers();
@@ -23,22 +24,25 @@ export const UsersMain = () => {
 
   const refreshUsers = async () => {
     try {
-      const response = await getUsers();
-      setUsers(response.data.response);
+      const response = await getUsers(user.company);
+      setUsers(
+        response.data.response.filter((i) => i.username !== user.username)
+      );
     } catch (error) {
       console.log(error);
     }
   };
 
   const clientCreateUser = (data) => {
+    data.company = user.company;
     const promise = createUser(data);
 
-    refreshUsers();
     toast.promise(promise, {
       loading: "loading",
       success: (response) => {
         reset();
         setuserIdForm(null);
+        refreshUsers();
         return response.data.message;
       },
       error: (error) => {
@@ -149,6 +153,18 @@ export const UsersMain = () => {
               required={true}
               type={"password"}
             />
+
+            <label htmlFor="role" className="font-bold">
+              Role
+            </label>
+            <select
+              id="role"
+              className="p-3 rounded-md my-2 border-2 border-gray-400 bg-white"
+              {...register("role", { required: true })}
+            >
+              <option value="employee">Employee</option>
+              <option value="admin">Admin</option>
+            </select>
 
             <div className="justify-between items-center flex ">
               <button

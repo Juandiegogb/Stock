@@ -13,8 +13,9 @@ router.post("/login", userController.login);
 router.post("/logout", userController.logout);
 router.put("/updateUser/:id", userController.updateUser);
 router.delete("/deleteUser/:id", userController.deleteUser);
-router.get("/getUsers", userController.getUsers);
+router.get("/getUsers/:companyId", userController.getUsers);
 router.get("/getUser/:id", userController.getUser);
+router.post("/createAdmin", userController.createAdmin);
 
 // Element section
 router.post("/createElement", elementController.createElement);

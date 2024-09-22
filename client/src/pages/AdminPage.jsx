@@ -10,7 +10,7 @@ export const AdminPage = () => {
   const navigate = useNavigate();
 
   return user && buttons ? (
-    <div className="flex flex-col min-h-screen" oncharge>
+    <div className="flex flex-col min-h-screen">
       <CustomNavbar />
       <div className="flex flex-1">
         <CustomSideBar buttons={buttons} />

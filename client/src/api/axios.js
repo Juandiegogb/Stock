@@ -1,10 +1,10 @@
 import axios from "axios";
 let apiUrl;
 
-if (process.env.environment !== "production") {
+if (import.meta.env.VITE_ENVIRONMENT !== "production") {
   apiUrl = "http://localhost:3000";
 } else {
-  apiUrl = process.env.apiUrl;
+  apiUrl = import.meta.env.VITE_API_URL;
 }
 
 export const api = axios.create({

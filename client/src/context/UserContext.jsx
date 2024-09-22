@@ -32,6 +32,19 @@ export const UserProvider = ({ children }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (user && user.role === "admin") {
+      setButtons([
+        { name: "Home", link: "/admin" },
+        { name: "Users", link: "/users" },
+        { name: "Create Element", link: "/createElement" },
+        { name: "Create provider", link: "/#" },
+        { name: "Stock", link: "/#" },
+        { name: "Sales", link: "/#" },
+      ]);
+    }
+  }, [user]);
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
