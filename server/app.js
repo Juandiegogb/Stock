@@ -6,10 +6,14 @@ import { DBconnect } from "./db.js";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 
-dotenv.config({ path: "./src/.env" });
+if (process.env.enviromment !== "production") {
+  dotenv.config({ path: "./src/.env" });
+}
+
+const origin = process.env.allowedOrigin;
 
 const app = express();
-app.use(cors({ credentials: true, origin: "*" }));
+app.use(cors({ credentials: true, origin: origin }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(morgan("dev"));
