@@ -8,6 +8,7 @@ import { UserProvider } from "./context/UserContext";
 import { UsersPage } from "./pages/UsersPage";
 import { CreateElementPage } from "./pages/CreateElementPage";
 import { useForm } from "react-hook-form";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/users" element={<UsersPage />} />
           <Route path="/createElement" element={<CreateElementPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </UserProvider>
     </BrowserRouter>
