@@ -26,11 +26,11 @@ export const UserProvider = ({ children }) => {
     localStorage.setItem("buttons", JSON.stringify(buttons));
   }, [buttons]);
 
-  useEffect(() => {
-    if (location.pathname !== "/" && (!user || !buttons)) {
-      navigate("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (location.pathname !== "/" && (!user || !buttons)) {
+  //     navigate("/");
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (user && user.role === "admin") {
